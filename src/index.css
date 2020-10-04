@@ -3,3 +3,10 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.payment-block {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 2rem;
+}

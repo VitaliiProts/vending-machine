@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import ProductList from './components/grid/ProductList';
 import Coins from './components/coins/Coins';
-import GetMoney from './components/buttons/ButtonGetMoney';
-import GetProduct from './components/buttons/ButtonGetProduct';
+import ButtonGetMoney from './components/buttons/ButtonGetMoney';
+import ButtonGetProduct from './components/buttons/ButtonGetProduct';
 
+import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -19,6 +20,7 @@ class App extends Component {
       { id: 5, name: 'Моршинська', price: 2, total: 3 },
     ],
     coins: [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1, 2],
+    balance: 0,
   }
 
   getItem = id => {
@@ -30,14 +32,21 @@ class App extends Component {
   }
 
   render() {
+    let balance = this.state.balance;
+
     return (
       <section className='container'>
         <h1 className='text-center'>Vending Machine</h1>
 
         <ProductList products={this.state.products} getItem={this.getItem} />
         <Coins coins={this.state.coins} rechargeBalance={this.rechargeBalance} />
-        <GetMoney />
-        <GetProduct />
+        <div className='payment-block'>
+          <ButtonGetMoney />
+          <Button variant="outline-info" disabled>
+            Balance: <strong>{ balance < 1 ? `${Math.round(balance * 100)}p` : `£${balance}` }</strong>
+          </Button>
+          <ButtonGetProduct />
+        </div>
       </section>
     )
   }
