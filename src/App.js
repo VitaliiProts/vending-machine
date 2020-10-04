@@ -9,9 +9,7 @@ import ButtonGetProduct from './components/buttons/ButtonGetProduct';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 class App extends Component {
-
   state = {
     products: [
       { id: 0, name: 'Coca-cola', price: 0.50, total: 2 },
@@ -28,8 +26,6 @@ class App extends Component {
   }
 
   getItem = id => {
-    console.log('id', id);
-
     const message = this.props.alert;
     const copyProductsArr = this.state.products.slice();
     const purchasePermission = this.state.purchasePermission;
@@ -62,12 +58,9 @@ class App extends Component {
         balance: balance,
       })
     }
-
   }
 
   rechargeBalance = val => {
-    console.log('val', val);
-
     const message = this.props.alert;
     const balance = this.state.balance;
     const purchasePermission = this.state.purchasePermission;
@@ -84,8 +77,6 @@ class App extends Component {
   }
 
   getMoney = () => {
-    console.log('Get momey');
-
     this.setState({
       balance: 0,
       purchasePermission: true,
@@ -94,8 +85,6 @@ class App extends Component {
   }
 
   getProduct = () => {
-    console.log('Get Product');
-
     this.setState({
       purchasePermission: true,
       currentProduct: ''
