@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
 export default class ButtonGetProduct extends Component {
   render() {
-    return <button>Get Product!</button>
+    const { getProduct } = this.props;
+    return <Button variant="primary" onClick={ getProduct }>Get your product</Button>
   }
+}
+
+ButtonGetProduct.propTypes = {
+  getProduct: PropTypes.func,
 }

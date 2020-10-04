@@ -21,6 +21,7 @@ class App extends Component {
     ],
     coins: [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1, 2],
     balance: 0,
+    currentProduct: ''
   }
 
   getItem = id => {
@@ -29,6 +30,14 @@ class App extends Component {
 
   rechargeBalance = val => {
     console.log('val', val)
+  }
+
+  getMoney = () => {
+    console.log('Get momey')
+  }
+
+  getProduct = () => {
+    console.log('Get Product')
   }
 
   render() {
@@ -41,11 +50,11 @@ class App extends Component {
         <ProductList products={this.state.products} getItem={this.getItem} />
         <Coins coins={this.state.coins} rechargeBalance={this.rechargeBalance} />
         <div className='payment-block'>
-          <ButtonGetMoney />
+          <ButtonGetMoney getMoney={this.getMoney} />
           <Button variant="outline-info" disabled>
             Balance: <strong>{ balance < 1 ? `${Math.round(balance * 100)}p` : `£${balance}` }</strong>
           </Button>
-          <ButtonGetProduct />
+          <ButtonGetProduct getProduct={this.getProduct} />
         </div>
       </section>
     )
