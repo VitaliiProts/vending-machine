@@ -14,5 +14,6 @@ export default class ProductList extends Component {
 }
 
 ProductList.propTypes = {
-  products: PropTypes.arrayOf(PropTypes.object)
+  products: PropTypes.arrayOf(PropTypes.object),
+  getItem: PropTypes.func
 }

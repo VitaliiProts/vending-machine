@@ -1,4 +1,4 @@
-.product-list {
+.product-list, .coins {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

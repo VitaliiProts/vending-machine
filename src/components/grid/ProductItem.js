@@ -23,7 +23,7 @@ export default class ProductItem extends Component {
       <Card className="text-center" style={styles.card} onClick={() => onClick(product.id)} >
         <Card.Body>
           <Card.Title style={styles.cardTitle}>{ product.name }</Card.Title>
-          <Card.Text>Price: { product.price < 1 ? `${Math.round(product.price * 100)}p` : `£${product.price}`  } </Card.Text>
+          <Card.Text>Price: { product.price < 1 ? `${Math.round(product.price * 100)}p` : `£${product.price}`  }</Card.Text>
         </Card.Body>
         {
           product.total ? 

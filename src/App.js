@@ -18,10 +18,15 @@ class App extends Component {
       { id: 4, name: 'Наш сік', price: 0.20, total: 3 },
       { id: 5, name: 'Моршинська', price: 2, total: 3 },
     ],
+    coins: [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1, 2],
   }
 
   getItem = id => {
-    console.log('TEST')
+    console.log('id', id)
+  }
+
+  rechargeBalance = val => {
+    console.log('val', val)
   }
 
   render() {
@@ -30,7 +35,7 @@ class App extends Component {
         <h1 className='text-center'>Vending Machine</h1>
 
         <ProductList products={this.state.products} getItem={this.getItem} />
-        <Coins />
+        <Coins coins={this.state.coins} rechargeBalance={this.rechargeBalance} />
         <GetMoney />
         <GetProduct />
       </section>
