@@ -35,7 +35,7 @@ class App extends Component {
     const priceItem = copyProductsArr[id].price;
     let balance = this.state.balance;
 
-    if (priceItem && purchasePermission > balance && totalItem > 0) {      
+    if (purchasePermission && priceItem > balance && totalItem > 0) {      
       message.error('Please insert coins');
     }
 
