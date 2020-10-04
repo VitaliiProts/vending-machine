@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { withAlert  } from 'react-alert'
+import { Button } from 'react-bootstrap';
+
 import ProductList from './components/grid/ProductList';
 import Coins from './components/coins/Coins';
 import ButtonGetMoney from './components/buttons/ButtonGetMoney';
 import ButtonGetProduct from './components/buttons/ButtonGetProduct';
 
-import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -21,27 +23,88 @@ class App extends Component {
     ],
     coins: [0.01, 0.02, 0.05, 0.10, 0.20, 0.50, 1, 2],
     balance: 0,
-    currentProduct: ''
+    currentProduct: '',
+    purchasePermission: true,
   }
 
   getItem = id => {
-    console.log('id', id)
+    console.log('id', id);
+
+    const message = this.props.alert;
+    const copyProductsArr = this.state.products.slice();
+    const purchasePermission = this.state.purchasePermission;
+    const currentProduct = this.state.currentProduct;
+    const totalItem = copyProductsArr[id].total;
+    const nameItem = copyProductsArr[id].name;
+    const priceItem = copyProductsArr[id].price;
+    let balance = this.state.balance;
+
+    if (priceItem && purchasePermission > balance && totalItem > 0) {      
+      message.error('Please insert coins');
+    }
+
+    if (!purchasePermission) {
+      message.error(`Please pick up your product ${currentProduct}`)
+    }
+
+    if(purchasePermission && totalItem < 1){
+      message.error('The product is over');
+    }
+
+    if (purchasePermission && totalItem > 0 && copyProductsArr[id].total > 0 && priceItem <= balance) {
+      copyProductsArr[id].total--;
+      balance -= priceItem;
+
+      this.setState({
+        products: copyProductsArr,
+        purchasePermission: !purchasePermission,
+        currentProduct: nameItem,
+        balance: balance,
+      })
+    }
+
   }
 
   rechargeBalance = val => {
-    console.log('val', val)
+    console.log('val', val);
+
+    const message = this.props.alert;
+    const balance = this.state.balance;
+    const purchasePermission = this.state.purchasePermission;
+    const currentProduct = this.state.currentProduct;
+    const newBalance = balance + val;
+
+    if (purchasePermission) {
+      this.setState({
+        balance: parseFloat(newBalance.toFixed(2))
+      }); 
+    } else {
+      message.error(`please pick up your product ${currentProduct}`);
+    }
   }
 
   getMoney = () => {
-    console.log('Get momey')
+    console.log('Get momey');
+
+    this.setState({
+      balance: 0,
+      purchasePermission: true,
+    })
+
   }
 
   getProduct = () => {
-    console.log('Get Product')
+    console.log('Get Product');
+
+    this.setState({
+      purchasePermission: true,
+      currentProduct: ''
+    })
   }
 
   render() {
     let balance = this.state.balance;
+    let lastPurchased = this.state.currentProduct;
 
     return (
       <section className='container'>
@@ -50,15 +113,15 @@ class App extends Component {
         <ProductList products={this.state.products} getItem={this.getItem} />
         <Coins coins={this.state.coins} rechargeBalance={this.rechargeBalance} />
         <div className='payment-block'>
-          <ButtonGetMoney getMoney={this.getMoney} />
+          <ButtonGetMoney getMoney={this.getMoney} balance={balance} lastPurchased={lastPurchased} />
           <Button variant="outline-info" disabled>
             Balance: <strong>{ balance < 1 ? `${Math.round(balance * 100)}p` : `£${balance}` }</strong>
           </Button>
-          <ButtonGetProduct getProduct={this.getProduct} />
+          <ButtonGetProduct getProduct={this.getProduct} balance={balance} lastPurchased={lastPurchased} />
         </div>
       </section>
     )
   }
 }
 
-export default App;
+export default withAlert()(App);
